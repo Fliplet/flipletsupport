@@ -10,6 +10,10 @@
  */
 ?>
 <div id="navbar-mobile" class="collapse">
+  <div class="navbar-overlay-title">Search</div>
+  <?php
+  get_template_part( 'template-parts/search/search', 'form' );
+  ?>
   <div class="navbar-overlay-title">Main menu</div>
   <?php
   wp_nav_menu(
@@ -19,9 +23,5 @@
       'walker' => new Nav_Menu_Walker_Bootstrap(),
     )
   );
-  ?>
-  <div class="navbar-overlay-title">Search</div>
-  <?php
-  get_template_part( 'template-parts/search/search', 'form' );
   ?>
 </div>

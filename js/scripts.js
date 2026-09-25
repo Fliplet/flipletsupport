@@ -34,7 +34,52 @@ jQuery.noConflict();
       });
     }
 
+    function updateMobileSearchViewport() {
+      var mobileMenu = document.getElementById('navbar-mobile');
+
+      if (!mobileMenu) {
+        return;
+      }
+
+      if (window.innerWidth > 1075) {
+        mobileMenu.style.removeProperty('height');
+        document.documentElement.style.removeProperty('--mobile-search-results-height');
+        return;
+      }
+
+      var viewport = window.visualViewport;
+      var visibleBottom = viewport ? viewport.offsetTop + viewport.height : window.innerHeight;
+      var navbar = document.querySelector('.navbar');
+      var menuTop = navbar ? navbar.getBoundingClientRect().bottom : mobileMenu.getBoundingClientRect().top;
+      var activeInput = document.activeElement;
+
+      mobileMenu.style.height = Math.max(0, visibleBottom - menuTop) + 'px';
+
+      if (activeInput && $(activeInput).is('.searchform input[name="s"]')) {
+        var resultsHeight = Math.max(0, visibleBottom - activeInput.getBoundingClientRect().bottom - 8);
+        document.documentElement.style.setProperty('--mobile-search-results-height', resultsHeight + 'px');
+      }
+    }
+
+    function scheduleMobileSearchViewportUpdate() {
+      window.requestAnimationFrame(updateMobileSearchViewport);
+    }
+
+    function attachMobileSearchViewportHandlers() {
+      window.addEventListener('resize', scheduleMobileSearchViewportUpdate);
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', scheduleMobileSearchViewportUpdate);
+        window.visualViewport.addEventListener('scroll', scheduleMobileSearchViewportUpdate);
+      }
+
+      $(document).on('focusin focusout input', '.searchform input[name="s"]', scheduleMobileSearchViewportUpdate);
+      $('#navbar-mobile').on('scroll', scheduleMobileSearchViewportUpdate);
+      updateMobileSearchViewport();
+    }
+
     attachBootstrapHandlers();
     addResponsiveWrapperToIframes();
+    attachMobileSearchViewportHandlers();
   });
 })(jQuery);

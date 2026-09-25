@@ -22,9 +22,15 @@
   .navbar-group {
     display: flex;
 
-    @include below(991px) {
+    @include below(1200px) {
       .searchform {
-        display: none;
+        width: 180px;
+      }
+    }
+
+    @include below(1075px) {
+      .searchform {
+        display: none !important;
       }
     }
   }
@@ -36,6 +42,14 @@
     height: $navbar-height;
     padding: 10px 15px 10px 0;
     margin-right: -15px;
+
+    @include above(1075px) {
+      display: none !important;
+    }
+
+    @include below(1075px) {
+      display: block !important;
+    }
 
     .navbar-hamburger {
       width: 100%;
@@ -100,8 +114,8 @@
   .navbar-collapse {
     flex-grow: unset;
 
-    @include below(992px) {
-      display: none;
+    @include below(1075px) {
+      display: none !important;
     }
 
     .navbar-nav {
@@ -118,6 +132,10 @@
           font-weight: normal;
 
           @include transition(color 0.2s ease-in-out);
+
+          @include below(1200px) {
+            font-size: 12px;
+          }
 
           &:hover {
             color: $menu-links;
@@ -144,15 +162,21 @@
   height: calc(100vh - #{$navbar-height});
   padding: 5vw 10vw 0;
   background-color: $darker-bg-color;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 
   @include transition(right 0.15s ease-in-out);
 
-  @include above(991px) {
+  @include above(1075px) {
     display: none;
   }
 
   &.show {
     right: 0;
+
+    @include below(1075px) {
+      display: block;
+    }
   }
 
   .navbar-nav {
@@ -187,6 +211,10 @@
 
   .search-input-group {
     max-width: 300px;
+  }
+
+  .searchform {
+    width: 100%;
   }
 }
 
