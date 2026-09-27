@@ -21,7 +21,7 @@ function load_fliplet_fonts() {
 }
 
 function load_theme_styles() {
-  wp_register_style('theme_style', get_template_directory_uri() . '/style.css', array(), '1.1.4', 'all');
+  wp_register_style('theme_style', get_template_directory_uri() . '/style.css', array(), '1.2.1', 'all');
 
   wp_enqueue_style('theme_style');
 }

@@ -57,3 +57,16 @@
     }
   }
 }
+
+@include below(1075px) {
+  body > .algolia-autocomplete {
+    height: auto;
+    overflow: visible;
+  }
+
+  body > .algolia-autocomplete .aa-dropdown-menu {
+    max-height: var(--mobile-search-results-height, 250px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
